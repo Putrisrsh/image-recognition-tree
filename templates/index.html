@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i|Catamaran|Roboto+Condensed" rel="stylesheet" type="text/css" />
+    <title>Putri's AI-Powered Image Recognition</title>
+    <style>
+      body {
+        background-color: #428791;
+        height:100vh;
+        font-family: 'Catamaran', sans-serif;
+      }
+
+      h1{
+        text-alignment: center;
+        padding-left: 10%;
+      }
+
+      .wrapper{
+        max-width: 500px;
+        width: 100%;
+        height: auto;
+        background: #ffffff;
+        padding: 60px 45px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 25px;
+      }
+
+      .image{
+        width: 200px;
+        height: 200px;
+      }
+
+    </style>
+	</head>
+  
+	<body>
+    <div class="wrapper">
+        <h3>Let's check if what you're uploading is a Tree!</h3>
+        
+        <p>
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+        </p>
+        {% if filename %}
+            <div>
+                <img class="image" src="{{ url_for('display_image', filename=filename) }}">
+            </div>
+        {% endif %}
+
+        {% if prediction %}
+        <div>
+            <h3>{{ prediction }}</h3>
+        </div>
+        {% endif %}
+        
+        <div class="form">
+          <form method="POST" enctype=multipart/form-data>
+            <input type="file" name="file">
+            <input type="submit" value="Upload">
+          </form>
+        </div>
+    </div>
+	</body>
+</html>
