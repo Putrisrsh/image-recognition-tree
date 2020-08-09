@@ -8,7 +8,8 @@ from PIL import Image, ImageOps
 
 #CONSTANTS
 UPLOAD_FOLDER = 'static/uploads/'
-# png format's still experiencing a trouble sometimes
+
+# Png format's still experiencing a trouble sometimes
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 PREDICTION_THRESHOLD = .8
 COMPARISON_ITEM = 'Tree'
@@ -33,11 +34,14 @@ def upload_file():
     if 'file' not in request.files:
       flash('No file part')
       return redirect(request.url)
+
     file = request.files['file']
+
     #check for file and allowed file type
     if file and allowed_file(file.filename): 
-      filename = secure_filename(file.filename) 
-      #secure the filename!
+      filename = secure_filename(file.filename)
+
+      #secure the filename
       filepath = os.path.join(UPLOAD_FOLDER, filename)
       file.save(filepath)
       prediction = process_file(filepath)
@@ -105,7 +109,5 @@ def truncate(f, n):
     i, p, d = s.partition('.')
     return '.'.join([i, (d+'0'*n)[:n]])
 
-
-# app.run(host='0.0.0.0', port=8080)
 if __name__ == "__main__":
     app.run(debug=True)
